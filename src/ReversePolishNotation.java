@@ -1,6 +1,8 @@
 
+import java.text.BreakIterator;
 import java.util.Scanner;
 import java.util.StringTokenizer;
+import reverse.polish.notation.File;
 import reverse.polish.notation.List;
 import reverse.polish.notation.Node;
 import reverse.polish.notation.Pila;
@@ -138,7 +140,7 @@ public class ReversePolishNotation {
             }
             aux = aux.getNext();
         }
-        System.out.println("El resultado de la operacion es: "+respuesta);
+        System.out.println("El resultado de la operacion es: " + respuesta);
         return rpn;
     }
 
@@ -162,13 +164,32 @@ public class ReversePolishNotation {
     }
 
     protected void ascendente(List db) {
-        Sort az = new Sort();    
+        Sort az = new Sort();
         az.sortAsedente(db);
     }
-    
-     protected void descendete(List db) {
-        Sort az = new Sort();    
+
+    protected void descendete(List db) {
+        Sort az = new Sort();
         az.sortDescendete(db);
+    }
+
+    public void ExportFile(List db) {
+         String expresion = "";
+        String temp = " ";
+        String temp2 = " ";
+        String resultado = "";
+        Node aux = db.getHead();
+        for (int i = 0; i < db.size(); i++) {
+            temp = aux.getOperacion();
+            temp2 = aux.getResultado();
+            expresion = expresion + " " + temp + " "+temp2+"|"+"\n";
+            
+            
+            aux = aux.getNext();
+        }
+        File enviar = new File();
+        enviar.exportar(expresion, resultado);
+
     }
 
     protected void MainMenu() {
@@ -199,16 +220,22 @@ public class ReversePolishNotation {
                 temporal = identificadorValores(expresion);
                 temporal = validacionExpresion(temporal);
                 rpn = calculoRPN(temporal);
-                dataBase(temporal, rpn);              
+                dataBase(temporal, rpn);
+                   MainMenu();
                 break;
             case 2:
                 ascendente(db);
+                   MainMenu();
                 break;
             case 3:
                 descendete(db);
+                   MainMenu();
+                break;
+            case 4:
+                ExportFile(db);
                 break;
         }
-        MainMenu();
+  
     }
 
     /**

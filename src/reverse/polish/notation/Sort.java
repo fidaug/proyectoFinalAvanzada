@@ -10,17 +10,17 @@ public class Sort {
         int size = db.getSize();
 
         Node aux = db.getHead();
+        
         for (int i = 0; i < size; i++) {
-            String resultadoActual = aux.getResultado();
+            double resultadoActual = Double.parseDouble(aux.getResultado());
             Node auxMatch = aux.getNext();
             Node nodeMax = aux;
-            for (int j = 0; j < size; j++) {
+            for (int j = i+1; j < size; j++) {
                 if (auxMatch == null) {
                     break;
                 }
-                String resultMatch = auxMatch.getResultado();
-                System.out.println(auxMatch.getResultado());
-                if (resultadoActual.compareTo(resultMatch) > 0) {
+                double resultMatch = Double.parseDouble(auxMatch.getResultado());
+                if (resultadoActual > resultMatch) {
                     nodeMax = auxMatch;
                 }
                 auxMatch = auxMatch.getNext();
@@ -37,14 +37,31 @@ public class Sort {
     }
 
     public void sortDescendete(List db) {
-        int size = db.getSize();
-                 String resultadoActual = aux.getResultado();
-
+       String temp = "";
+        int n = db.getSize();
+        
         Node aux = db.getHead();
-        for (int i = 0; i < size; i++) {
-            
+        for (int i = 0; i <= n-1; i++) {
+            temp = aux.getResultado(); 
+            Node siguiente = aux.getNext();
+            Node mayor = aux;
+            for (int j = 1; j < n ; j++) {
+                if (siguiente == null) {
+                  break;
+                }
+                String verificador = siguiente.getResultado();
+                if (temp.compareTo(verificador)< 0) {
+                    mayor = siguiente;
+                }
+                 siguiente = siguiente.getNext();           
+            }
+            Node temp2 = aux;
+            aux.setResultado(mayor.getResultado()); 
+            mayor.setResultado(temp2.getResultado());
+             
+            aux = aux.getNext();
         }
-
+             print(db);
     }
 
     public void print(List db) {
